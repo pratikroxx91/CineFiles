@@ -22,6 +22,10 @@ const Favorites = () => {
 
     useEffect(() => {
         fetchFavorites();
+        if (!token) {
+            navigate("/");
+            return;
+        }
     }, []);
 
     const deleteMovie = async (id) => {
@@ -37,99 +41,99 @@ const Favorites = () => {
 
     return (
         <>
-            {token ? (
-                <div className="min-h-screen bg-gray-950 text-white">
 
-                    {/* Header */}
-                    <section className="max-w-7xl mx-auto px-6 pt-12 pb-8">
+            <div className="min-h-screen bg-gray-950 text-white">
 
-                        <p className="text-amber-500 uppercase tracking-widest text-sm font-semibold mb-3">
-                            Your Collection
-                        </p>
+                {/* Header */}
+                <section className="max-w-7xl mx-auto px-6 pt-12 pb-8">
 
-                        <h1 className="text-4xl md:text-5xl font-bold mb-3">
-                            Favorites
-                        </h1>
+                    <p className="text-amber-500 uppercase tracking-widest text-sm font-semibold mb-3">
+                        Your Collection
+                    </p>
 
-                        <p className="text-gray-400">
-                            The movies you've decided are worth keeping.
-                        </p>
+                    <h1 className="text-4xl md:text-5xl font-bold mb-3">
+                        Favorites
+                    </h1>
 
-                    </section>
+                    <p className="text-gray-400">
+                        The movies you've decided are worth keeping.
+                    </p>
+
+                </section>
 
 
-                    {/* Favorites */}
-                    <section className="max-w-7xl mx-auto px-6 pb-16">
+                {/* Favorites */}
+                <section className="max-w-7xl mx-auto px-6 pb-16">
 
-                        {favorites.length === 0 ? (
+                    {favorites.length === 0 ? (
 
-                            /* Empty State */
-                            <div className="border border-gray-800 bg-gray-900 rounded-2xl p-12 text-center">
+                        /* Empty State */
+                        <div className="border border-gray-800 bg-gray-900 rounded-2xl p-12 text-center">
 
-                                <div className="text-5xl mb-5">
-                                    🎬
-                                </div>
-
-                                <h2 className="text-2xl font-semibold mb-3">
-                                    Your collection is empty
-                                </h2>
-
-                                <p className="text-gray-400 max-w-md mx-auto">
-                                    You haven't added any favorites yet. Head over to the
-                                    Movies page and start building your collection.
-                                </p>
-
+                            <div className="text-5xl mb-5">
+                                🎬
                             </div>
 
-                        ) : (
+                            <h2 className="text-2xl font-semibold mb-3">
+                                Your collection is empty
+                            </h2>
 
-                            /* Movie Grid */
-                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                            <p className="text-gray-400 max-w-md mx-auto">
+                                You haven't added any favorites yet. Head over to the
+                                Movies page and start building your collection.
+                            </p>
 
-                                {favorites.map((favorite) => (
+                        </div>
 
-                                    <div
-                                        key={favorite.imdbID}
-                                        className="group bg-gray-900 rounded-xl overflow-hidden border border-gray-800 hover:border-gray-700 shadow-lg transition duration-300"
-                                    >
+                    ) : (
 
-                                        {/* Poster */}
-                                        <div className="relative overflow-hidden">
+                        /* Movie Grid */
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
 
-                                            <img
-                                                className="w-full h-84 object-cover group-hover:scale-105 transition duration-500"
-                                                src={favorite.poster}
-                                                alt={favorite.title}
-                                            />
+                            {favorites.map((favorite) => (
 
-                                            <span className="absolute top-3 right-3 bg-black/80 backdrop-blur-sm text-sm px-3 py-1 rounded-full text-gray-200">
-                                                {favorite.year}
-                                            </span>
+                                <div
+                                    key={favorite.imdbID}
+                                    className="group bg-gray-900 rounded-xl overflow-hidden border border-gray-800 hover:border-gray-700 shadow-lg transition duration-300"
+                                >
 
-                                        </div>
+                                    {/* Poster */}
+                                    <div className="relative overflow-hidden">
 
+                                        <img
+                                            className="w-full h-84 object-cover group-hover:scale-105 transition duration-500"
+                                            src={favorite.poster}
+                                            alt={favorite.title}
+                                        />
 
-                                        {/* Movie Information */}
-                                        <div className="p-5">
+                                        <span className="absolute top-3 right-3 bg-black/80 backdrop-blur-sm text-sm px-3 py-1 rounded-full text-gray-200">
+                                            {favorite.year}
+                                        </span>
 
-                                            <h2 className="text-lg font-semibold truncate mb-4">
-                                                {favorite.title}
-                                            </h2>
-
-                                            <button
-                                                onClick={() => deleteMovie(favorite._id)}
-                                                className="w-full border border-gray-700 text-gray-400 hover:border-red-500 hover:text-red-400 py-2.5 rounded-lg font-medium transition duration-200"
-                                            >
-                                                Remove from Favorites
-                                            </button>
-                                        </div>
                                     </div>
-                                ))}
-                            </div>
-                        )}
-                    </section>
-                </div>
-            ) : navigate("/")}
+
+
+                                    {/* Movie Information */}
+                                    <div className="p-5">
+
+                                        <h2 className="text-lg font-semibold truncate mb-4">
+                                            {favorite.title}
+                                        </h2>
+
+                                        <button
+                                            onClick={() => deleteMovie(favorite._id)}
+                                            className="w-full border border-gray-700 text-gray-400 hover:border-red-500 hover:text-red-400 py-2.5 rounded-lg font-medium transition duration-200"
+                                        >
+                                            Remove from Favorites
+                                        </button>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                </section>
+            </div>
+
         </>
     )
 }
